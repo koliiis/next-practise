@@ -1,5 +1,5 @@
 export const PAGES = {
-  NOTE: (noteId: number) => `/notes/${noteId}`,
+  NOTE: (noteId: number) => `/posts/${noteId}`,
   HOME: '/',
-  NOTES: '/notes'
+  NOTES: '/posts'
 }
