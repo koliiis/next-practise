@@ -15,7 +15,7 @@ export default function Notes({ params }: { params: Promise<{ id: string }> }) {
   const noteId = Number(id);
   const note = testNotes.find(n => n.id === noteId);
 
-  return <div className="p-4">
+  return <div className="">
     {note &&
       <>
         <h1 className="text-2xl font-bold mb-4">Note #{note.id}</h1>

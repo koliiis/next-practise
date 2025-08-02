@@ -9,8 +9,8 @@ export function PostForm({ onPostCreated }: { onPostCreated?: () => void }) {
 
   async function action(formData: FormData) {
     await PublishPost(formData);
-    setValue(""); // очистити поле після сабміту
-    onPostCreated?.(); // оновити список
+    setValue("");
+    onPostCreated?.();
   }
 
   const { pending } = useFormStatus();

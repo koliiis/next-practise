@@ -1,11 +1,11 @@
 "use client";
 
-import { Post } from "@/app/(public)/posts/components/Post/Post";
+import { Post } from "@/components/post/Post";
 import { PAGES } from "@/config/pages.config";
 import { PostType } from "@/shared/types/post";
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
-import { PostForm } from "./PostForm";
+import { PostForm } from "../../../components/post/PostForm";
 
 export default function Notes() {
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -32,7 +32,7 @@ export default function Notes() {
   }, [loadPosts]);
 
   return (
-    <div className="p-4">
+    <div className="">
       <h1 className="text-2xl font-bold mb-4">Notes</h1>
       <div className="w-100">
         <PostForm onPostCreated={loadPosts} />
