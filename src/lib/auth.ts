@@ -1,67 +1,77 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
+export type SafeUser = {
+  id: string;
+  username: string;
+  email: string;
+  phone: number | null;
+  image: string | null;
+};
 
 export const authOptions: AuthOptions = {
   pages: {
-    signIn: '/auth/signin',
+    signIn: "/auth/signin",
   },
-
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
-
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
   },
-
-  callbacks: {
-    async jwt({ token, user }) { // I know, it just doesn't work properly, I'm not backender :(
-      if (user) {
-        token.user = {
-          id: +(user.id),
-          username: token.user.username,
-          email: token.user.email,
-          phone: token.user.phone,
-          image: token.user.image,
-          password: token.user.password,
-        };
-      }
-      return token;
-    },
-
-    async session({ token, session }) {
-      session.user = token.user;
-      return session;
-    },
-  },
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { label: 'Email', type: 'text' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<SafeUser | null> {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+
         const user = await prisma.user.findUnique({
-          where: { email: credentials?.email },
+          where: { email: credentials.email },
         });
 
-        if (!user) throw new Error('User name or password is not correct');
-        if (!credentials?.password) throw new Error('Please Provide Your Password');
+        if (!user || !user.password) {
+          return null;
+        }
 
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-        if (!isPasswordCorrect) throw new Error('User name or password is not correct');
+        const isValid = await bcrypt.compare(credentials.password, user.password);
 
-        return {
+        if (!isValid) {
+          return null;
+        }
+
+        // 🔧 Повертаємо об'єкт SafeUser
+        const safeUser: SafeUser = {
           id: String(user.id),
           username: user.username,
           email: user.email,
+          phone: user.phone,
+          image: user.image,
         };
+
+        return safeUser;
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user as SafeUser;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token?.user) {
+        session.user = token.user as SafeUser;
+      }
+      return session;
+    },
+  },
 };
