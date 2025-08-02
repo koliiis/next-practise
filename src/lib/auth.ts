@@ -1,4 +1,4 @@
-import { AuthOptions, User } from "next-auth";
+import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
@@ -19,9 +19,16 @@ export const authOptions: AuthOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }) { // I know, it just doesn't work properly, I'm not backender :(
       if (user) {
-        token.user = user as User;
+        token.user = {
+          id: +(user.id),
+          username: token.user.username,
+          email: token.user.email,
+          phone: token.user.phone,
+          image: token.user.image,
+          password: token.user.password,
+        };
       }
       return token;
     },
