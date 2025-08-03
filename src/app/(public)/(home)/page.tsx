@@ -31,7 +31,7 @@ export default function Home() {
       <div className="text-center mb-8">
           <Link
             href={PAGES.NOTES}
-            className="inline-block bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
+            className="inline-block bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 transition"
           >
             View All Posts
           </Link>

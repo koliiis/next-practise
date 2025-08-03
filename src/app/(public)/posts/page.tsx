@@ -36,8 +36,8 @@ export default function Notes() {
 
   return (
     <div className="">
-      <h1 className="text-2xl font-bold mb-4">Posts</h1>
-      <div className="w-100">
+      <h1 className="text-2xl font-bold mb-4">All Posts</h1>
+      <div className="w-200">
         <PostForm onPostCreated={loadPosts} />
         {posts.length === 0 && <div>No posts</div>}
         {posts.map((post) => (
@@ -46,7 +46,7 @@ export default function Notes() {
       </div>
       <Link
         href={PAGES.HOME}
-        className="bg-blue-500 text-white px-3 py-1 block w-50 mt-10 rounded hover:bg-blue-600"
+        className="bg-purple-600 text-white px-3 py-1 block w-50 mt-10 rounded hover:bg-purple-700"
       >
         Back to home page
       </Link>
