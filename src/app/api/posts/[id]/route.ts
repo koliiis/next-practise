@@ -1,11 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = Number(params.id);
+export async function DELETE(request: Request) {
+  const url = new URL(request.url);
+  const id = Number(url.pathname.split("/").pop());
 
   if (isNaN(id)) {
     return NextResponse.json({ error: "Invalid post id" }, { status: 400 });
