@@ -6,10 +6,12 @@ import { useState } from "react";
 
 export function PostForm({ onPostCreated }: { onPostCreated?: () => void }) {
   const [value, setValue] = useState("");
+  const [titleValue, setTitleValue] = useState("");
 
   async function action(formData: FormData) {
     await PublishPost(formData);
     setValue("");
+    setTitleValue("");
     onPostCreated?.();
   }
 
@@ -17,6 +19,13 @@ export function PostForm({ onPostCreated }: { onPostCreated?: () => void }) {
 
   return (
     <form action={action} className="space-y-2">
+      <input
+        name="title"
+        value={titleValue}
+        onChange={(e) => setTitleValue(e.target.value)}
+        placeholder="Title"
+        className="border px-4 py-2 w-full"
+      />
       <input
         name="content"
         value={value}

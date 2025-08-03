@@ -1,4 +1,4 @@
-import { SafeUser } from "@/path/to/authOptions"; // імпортуй, якщо треба
+import { SafeUser } from "@/path/to/authOptions";
 
 declare module "next-auth" {
   interface Session {

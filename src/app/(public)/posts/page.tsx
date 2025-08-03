@@ -6,8 +6,11 @@ import { PostType } from "@/shared/types/post";
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
 import { PostForm } from "../../../components/post/PostForm";
+import { useSession } from "next-auth/react";
 
 export default function Notes() {
+  const { data: session } = useSession();
+  const currentUserId = session?.user?.id;
   const [posts, setPosts] = useState<PostType[]>([]);
 
   const loadPosts = useCallback(() => {
@@ -33,12 +36,12 @@ export default function Notes() {
 
   return (
     <div className="">
-      <h1 className="text-2xl font-bold mb-4">Notes</h1>
+      <h1 className="text-2xl font-bold mb-4">Posts</h1>
       <div className="w-100">
         <PostForm onPostCreated={loadPosts} />
         {posts.length === 0 && <div>No posts</div>}
         {posts.map((post) => (
-          <Post key={post.id} post={post} />
+          <Post key={post.id} post={post} currentUser={currentUserId} onPostDeleted={loadPosts} />
         ))}
       </div>
       <Link

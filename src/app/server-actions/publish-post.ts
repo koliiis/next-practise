@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 
 export async function PublishPost(formData: FormData) {
   const content = formData.get("content") as string;
+  const title = formData.get("title") as string;
   
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
@@ -17,7 +18,7 @@ export async function PublishPost(formData: FormData) {
 
   await prisma.post.create({
     data: {
-      title: "Default title",
+      title: title,
       text: content,
       userId: +userId,
     },
