@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { PostType } from "@/shared/types/post";
 import { DeletePost } from "@/app/server-actions/delete-post";
-import { ConfirmModal } from "./ConfirmDeletePost";
+import { ConfirmModal } from "./ConfirmDeletePost"; // шадчн-модалка з Dialog
 import { formatDistanceToNow } from "date-fns";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
@@ -72,12 +72,13 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="text-gray-400 hover:text-gray-200"
+              aria-label="Post options"
             >
               <HiOutlineDotsHorizontal size={20} />
             </button>
 
             {menuOpen && (
-              <div className="absolute right-0 mt-2 w-32 rounded shadow-md z-10">
+              <div className="absolute right-0 mt-2 w-32 rounded shadow-md z-10 bg-neutral-900 border border-neutral-700">
                 <button
                   onClick={() => {
                     setConfirmOpen(true);
@@ -93,13 +94,12 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
         )}
       </div>
 
-      {confirmOpen && (
-        <ConfirmModal
-          message="Are you sure you want to delete this post?"
-          onConfirm={handleDelete}
-          onCancel={() => setConfirmOpen(false)}
-        />
-      )}
+      <ConfirmModal
+        open={confirmOpen}
+        message="Are you sure you want to delete this post?"
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmOpen(false)}
+      />
     </div>
   );
 }

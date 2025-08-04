@@ -1,35 +1,48 @@
-import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface ConfirmModalProps {
+  open: boolean;
   message: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-export function ConfirmModal({ message, onConfirm, onCancel }: ConfirmModalProps) {
+export function ConfirmModal({ open, message, onConfirm, onCancel }: ConfirmModalProps) {
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center z-50"
-      style={{ backgroundColor: "rgba(0, 0, 0, 0.4)", backdropFilter: "blur(1px)" }}
-      onClick={onCancel}
-    >
-      <div className="bg-neutral-800  border border-neutral-700 rounded-2xl p-6 max-w-sm w-full">
-        <p className="mb-6">{message}</p>
-        <div className="flex justify-end space-x-4">
-          <button
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onCancel()}>
+      <DialogContent className="bg-neutral-800 text-white border border-neutral-700 rounded-2xl p-6 max-w-sm w-full">
+        <DialogHeader>
+          <DialogTitle>Confirm Action</DialogTitle>
+          <DialogDescription className="text-gray-400">
+            {message}
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter className="mt-4">
+          <Button
+            variant="outline"
+            className="px-4 py-2 rounded border border-neutral-600 hover:bg-neutral-600 text-black"
             onClick={onCancel}
-            className="px-4 py-2 rounded border border-neutral-600 hover:bg-neutral-600"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="destructive"
             onClick={onConfirm}
-            className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+            className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-800"
           >
             Delete
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
