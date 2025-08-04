@@ -1,8 +1,10 @@
 import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
 
-export async function GET(request: Request, { params }: { params: { username: string } }) {
-  const { username } = params;
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ username: string }> }
+) {
+  const { username } = await context.params;
 
   try {
     const userWithPosts = await prisma.user.findUnique({
@@ -18,12 +20,14 @@ export async function GET(request: Request, { params }: { params: { username: st
     });
 
     if (!userWithPosts) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return new Response('User not found', { status: 404 });
     }
 
-    return NextResponse.json(userWithPosts.Post);
+    return new Response(JSON.stringify(userWithPosts.Post), {
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
-    console.error('Failed to load posts:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error(error);
+    return new Response('Internal Server Error', { status: 500 });
   }
 }
