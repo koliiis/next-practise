@@ -4,27 +4,50 @@ import { useEffect } from 'react';
 import { useUserPosts } from '@/stores/useUserPosts';
 import { Post } from '@/components/post/Post';
 import { User } from '@/shared/types/user';
+import { signOut, useSession } from 'next-auth/react';
 
 export default function ProfilePageClient({ user }: { user: User }) {
   const { posts, loadPosts, removePost, trigger } = useUserPosts();
+  const { data: session } = useSession();
 
   useEffect(() => {
     loadPosts(user.username);
   }, [user.username, loadPosts, trigger]);
 
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    window.location.reload();
+  };
+
+  const isOwnProfile = session?.user?.id === user.id.toString();
+
   return (
     <section className="max-w-3xl mx-auto p-4">
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+        <div className="w-25 h-25 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-5xl">
           {user.username[0].toUpperCase()}
         </div>
-        <div>
-          <h1 className="text-2xl font-bold">@{user.username}</h1>
+
+        <div className="ml-4">
+          <h1 className="text-4xl font-bold text-white">{user.username}</h1>
           <p className="text-gray-500">{user.email}</p>
         </div>
+
+        {isOwnProfile && (
+          <div className="ml-auto">
+            <button
+              onClick={handleSignOut}
+              className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition-colors"
+            >
+              Sign Out
+            </button>
+          </div>
+        )}
       </div>
 
-      <h2 className="text-xl font-semibold mb-4">Posts by {user.username}:</h2>
+      <h2 className="text-xl font-semibold mb-4 text-white mt-16">
+        Posts by {isOwnProfile ? 'you' : user.username}:
+      </h2>
 
       {posts.length === 0 ? (
         <p className="text-gray-500 italic">No posts yet.</p>

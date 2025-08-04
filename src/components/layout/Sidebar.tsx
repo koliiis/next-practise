@@ -38,7 +38,7 @@ export default function Sidebar() {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="py-3 px-6 rounded-xl flex items-center justify-center transition-all bg-neutral-900 text-zinc-400 hover:text-white hover:bg-zinc-800"
+          className="cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all bg-neutral-900 text-zinc-400 hover:text-white hover:bg-zinc-800"
         >
           <Plus className="w-6 h-6" />
         </button>
