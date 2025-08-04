@@ -13,7 +13,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useSession } from 'next-auth/react';
-import { PAGES } from '@/config/pages.config';
 
 interface Props {
   user: User;
@@ -35,15 +34,15 @@ export function UserNav({ user }: Props) {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-56 bg-neutral-800 text-white border border-neutral-700" side="right" align="end" sideOffset={32} forceMount>
         <DropdownMenuLabel className="font-normal">
-          <Link href={PAGES.PROFILE(user.username)} className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user.username}</p>
             <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-          </Link>
+          </div>
         </DropdownMenuLabel>
 
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className='bg-neutral-700' />
 
         <DropdownMenuItem>
           <Link href="/api/auth/signout" className="w-full">
