@@ -8,7 +8,7 @@ import { useEffect, useState, useCallback } from "react";
 import { PostForm } from "../../../components/post/PostForm";
 import { useSession } from "next-auth/react";
 
-export default function Notes() {
+export default function Posts() {
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
   const [posts, setPosts] = useState<PostType[]>([]);

@@ -2,9 +2,9 @@ import { User } from "./user";
 
 export interface PostType {
   id: number;
-  title: string;
+  title?: string;
   text: string;
-  userId: number;
   createdAt: string;
+  userId: string | number;
   User: User;
 }

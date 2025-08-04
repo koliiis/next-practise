@@ -3,14 +3,15 @@ import { Inter } from 'next/font/google';
 import "./globals.css";
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/theme-provider';
-import AuthButtons from "@/components/auth/auth-buttons";
+import Sidebar from "@/components/layout/Sidebar";
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} relative antialiased`}>
+      <body className={`${inter.className} relative bg-neutral-950`}>
         <AuthProvider>
           <ThemeProvider
             attribute="class"
@@ -18,10 +19,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem
             disableTransitionOnChange
           >
-            <div className="p-4">
-              <AuthButtons />
-              <main>{children}</main>
-              <Toaster />
+            <div className="flex min-h-screen relative">
+              <Sidebar />
+              <div className="flex-1 flex flex-col">
+                <main className="flex-1 max-w-3xl w-full mx-auto mt-12 px-4">
+                  {children}
+                </main>
+                <Toaster />
+              </div>
             </div>
           </ThemeProvider>
         </AuthProvider>

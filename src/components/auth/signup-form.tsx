@@ -81,6 +81,7 @@ export function SignUpForm({ callbackUrl }: Props) {
 
       if ('error' in response) {
         toast.error(response.error || 'Something went wrong!');
+        return;
       } else {
         toast.success('Your account has been created successfully! You can now login.');
         form.reset();

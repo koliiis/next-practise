@@ -1,50 +1,60 @@
 'use client';
 
-import { Post } from "@/components/post/Post";
-import { PAGES } from "@/config/pages.config";
-import { PostType } from "@/shared/types/post";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+
+import { Post } from '@/components/post/Post';
+import { useAllPosts } from '@/stores/useAllPosts';
+import Link from 'next/link';
+import { PAGES } from '@/config/pages.config';
 
 export default function Home() {
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
-  const [posts, setPosts] = useState<PostType[]>([]);
 
-  const loadPosts = useCallback(() => {
-    fetch("/api/posts")
-      .then((res) => res.ok ? res.json() : [])
-      .then((data) => setPosts(data.slice(0, 3)))
-      .catch(() => setPosts([]));
-  }, []);
+  const { allPosts, loadPosts } = useAllPosts();
 
   useEffect(() => {
     loadPosts();
   }, [loadPosts]);
 
-  return (
-    <main className="max-w-3xl mx-auto mt-12">
-      <h1 className="text-4xl font-bold text-center mb-6">Hey, welcome 👋</h1>
-      <p className="text-center text-gray-600 mb-8">Explore thoughts, tutorials, and personal notes.</p>
+  const latestPosts = allPosts.slice(0, 3);
 
-      <div className="text-center mb-8">
+  return (
+    <main className="flex-1 max-w-3xl w-full mx-auto mt-12 px-4">
+      <h1 className="text-4xl text-white font-bold text-center mb-6">
+        Hey, welcome {session?.user?.username} 👋
+      </h1>
+
+      <p className="text-center text-gray-500 mb-8">
+        Explore thoughts, tutorials, and personal notes.
+      </p>
+
+      <section className='bg-neutral-900 p-5 rounded-2xl border border-neutral-800'>
+        <div className='flex items-center justify-between mb-4'>
+          <h2 className="text-2xl text-white font-semibold">
+            Hottest Posts
+          </h2>
+
           <Link
             href={PAGES.NOTES}
-            className="inline-block bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 transition"
+            className="text-zinc-400 hover:text-white hover:bg-zinc-800 px-4 py-2 rounded"
           >
-            View All Posts
+            All posts
           </Link>
         </div>
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Latest Posts</h2>
-        {posts.length === 0 ? (
-          <p>No posts yet.</p>
+        {latestPosts.length === 0 ? (
+          <p className="text-gray-400">No posts yet.</p>
         ) : (
           <div className="space-y-6">
-            {posts.map((post) => (
-              <Post key={post.id} post={post} currentUser={currentUserId} onPostDeleted={loadPosts} />
+            {latestPosts.map((post) => (
+              <Post
+                key={post.id}
+                post={post}
+                currentUser={currentUserId}
+                onPostDeleted={loadPosts}
+              />
             ))}
           </div>
         )}

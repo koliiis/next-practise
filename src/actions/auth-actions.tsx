@@ -21,9 +21,20 @@ export async function registerUser(
 
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {
-        return { error: 'Email already exists.' };
+        const target = (error.meta?.target ?? []) as string[];
+
+        if (target.includes('username')) {
+          return { error: 'Username already exists.' };
+        }
+
+        if (target.includes('email')) {
+          return { error: 'Email already exists.' };
+        }
+
+        return { error: 'User already exists.' };
       }
     }
+
     return { error: 'An unexpected error occurred.' };
   }
 }
