@@ -12,11 +12,11 @@ export default function Home() {
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
 
-  const { allPosts, loadPosts } = useAllPosts();
+  const { allPosts, loadPosts, trigger } = useAllPosts();
 
   useEffect(() => {
     loadPosts();
-  }, [loadPosts]);
+  }, [loadPosts, trigger]);
 
   const latestPosts = allPosts.slice(0, 3);
 

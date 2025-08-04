@@ -6,11 +6,11 @@ import { Post } from '@/components/post/Post';
 import { User } from '@/shared/types/user';
 
 export default function ProfilePageClient({ user }: { user: User }) {
-  const { posts, loadPosts, removePost } = useUserPosts();
+  const { posts, loadPosts, removePost, trigger } = useUserPosts();
 
   useEffect(() => {
     loadPosts(user.username);
-  }, [user.username, loadPosts]);
+  }, [user.username, loadPosts, trigger]);
 
   return (
     <section className="max-w-3xl mx-auto p-4">

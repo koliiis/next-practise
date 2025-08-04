@@ -21,7 +21,7 @@ export function PostForm({ onPostCreated }: { onPostCreated?: () => void }) {
   }
 
   return (
-    <form action={action} className="bg-neutral-100 text-black rounded-xl p-4 mb-6 border border-neutral-300">
+    <form action={action} className="bg-neutral-900 text-black rounded-xl p-4 mb-6 border border-neutral-700">
       <div className="flex gap-3">
         <Link href={PAGES.PROFILE(session?.user?.username)} className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white">
           {session?.user?.username?.[0]?.toUpperCase() ?? "U"}
@@ -32,21 +32,21 @@ export function PostForm({ onPostCreated }: { onPostCreated?: () => void }) {
             name="title"
             value={titleValue}
             onChange={(e) => setTitleValue(e.target.value)}
-            placeholder="Додайте тему"
-            className="w-full bg-transparent text-lg placeholder-gray-500 border-b border-neutral-300 focus:outline-none focus:border-purple-500 pb-1"
+            placeholder="Title"
+            className="text-white w-full bg-transparent text-lg placeholder-neutral-600 border-b border-neutral-700 focus:outline-none focus:border-purple-500 focus:placeholder-neutral-500 pb-1"
           />
 
           <textarea
             name="content"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="Що нового?"
-            className="w-full bg-transparent resize-none placeholder-gray-500 border-b border-neutral-300 focus:outline-none focus:border-purple-500 text-md"
+            placeholder="What's new?"
+            className="text-white w-full bg-transparent resize-none placeholder-neutral-600 border-b border-neutral-700 focus:outline-none focus:border-purple-500 focus:placeholder-neutral-500 text-md"
             rows={3}
           />
           
           <div className="flex justify-between items-center pt-2 mt-2">
-            <p className="text-sm text-gray-400">Будь-хто може відповідати</p>
+            <p className="text-sm text-neutral-600">Everyone can see and comment</p>
             <button
               type="submit"
               disabled={pending || !value.trim()}
@@ -56,7 +56,7 @@ export function PostForm({ onPostCreated }: { onPostCreated?: () => void }) {
                   : "bg-gray-300 text-gray-400 cursor-not-allowed"
               }`}
             >
-              {pending ? "Публікується..." : "Опублікувати"}
+              {pending ? "Posting..." : "Post"}
             </button>
           </div>
         </div>

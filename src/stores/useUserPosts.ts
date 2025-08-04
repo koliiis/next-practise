@@ -6,10 +6,13 @@ interface UserPostsState {
   setPosts: (posts: PostType[]) => void;
   loadPosts: (username: string) => Promise<void>;
   removePost: (postId: number) => void;
+  trigger: number;
+  setTrigger: () => void;
 }
 
 export const useUserPosts = create<UserPostsState>((set) => ({
   posts: [],
+  trigger: 0,
   setPosts: (posts) => set({ posts }),
   loadPosts: async (username) => {
     try {
@@ -26,4 +29,5 @@ export const useUserPosts = create<UserPostsState>((set) => ({
     set((state) => ({
       posts: state.posts.filter((post) => post.id !== postId),
     })),
+  setTrigger: () => set(state => ({ trigger: state.trigger + 1 })),
 }));
