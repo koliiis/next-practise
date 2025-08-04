@@ -8,11 +8,11 @@ interface PageProps {
   };
 }
 
-export default async function ProfilePage(props: PageProps) {
-  const { params } = props;
+export default async function ProfilePage({ params }: PageProps) {
+  const { username } = await params;
 
   const user = await prisma.user.findUnique({
-    where: { username: params.username },
+    where: { username },
   });
 
   if (!user) return notFound();
