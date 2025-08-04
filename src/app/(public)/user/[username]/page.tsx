@@ -7,7 +7,7 @@ export default async function ProfilePage({
 }: {
   params: { username: string };
 }) {
-  const { username } = params;
+  const username = (await Promise.resolve(params)).username;
 
   const user = await prisma.user.findUnique({
     where: { username },
