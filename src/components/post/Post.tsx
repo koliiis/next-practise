@@ -64,7 +64,9 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
             <h2 className="mt-2 font-bold text-lg">{post.title}</h2>
           )}
 
-          <p className="mt-1 text-neutral-400 whitespace-pre-line text-sm">{post.text}</p>
+          <p className="mt-1 text-neutral-400 whitespace-pre-line text-sm break-all">
+            {post.text}
+          </p>
         </div>
 
         {+currentUser === post.userId && (
