@@ -8,14 +8,17 @@ import { useState } from 'react';
 import { PAGES } from '@/config/pages.config';
 import AuthButtons from '../auth/auth-buttons';
 import { CreatePostModal } from '../post/PublishPost';
+import { SigninDialog } from '../auth/SigninDialog';
+import { SignupDialog } from '../auth/SignupDialog';
 
 export default function Sidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+  const [modal, setModal] = useState<'signin' | 'signup' | null>(null);
 
   const username = session?.user?.username;
-  const profileHref = username ? PAGES.PROFILE(username) : PAGES.SIGNIN;
+  const profileHref = username ? PAGES.PROFILE(username) : null;
 
   return (
     <aside className="flex flex-col items-center gap-10 py-4 px-auto h-screen bg-black text-white rounded-br-4xl rounded-tr-4xl border-r border-neutral-800 sticky top-0">
@@ -37,25 +40,46 @@ export default function Sidebar() {
         </Link>
 
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsCreatePostOpen(true)}
           className="cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all bg-neutral-900 text-zinc-400 hover:text-white hover:bg-zinc-800"
         >
           <Plus className="w-6 h-6" />
         </button>
 
-        <Link href={profileHref} className="group">
-          <div className={`py-3 px-6 rounded-xl flex items-center justify-center transition-all 
-            ${pathname === profileHref ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
+        {profileHref ? (
+          <Link href={profileHref} className="group">
+            <div className={`cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all 
+              ${pathname === profileHref ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
+              <User className="w-6 h-6" />
+            </div>
+          </Link>
+        ) : (
+          <button
+            onClick={() => setModal('signin')}
+            className="cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all text-zinc-400 hover:text-white hover:bg-zinc-800"
+            aria-label="Sign In"
+          >
             <User className="w-6 h-6" />
-          </div>
-        </Link>
+          </button>
+        )}
       </nav>
 
       <div className="mt-auto w-full flex justify-center">
         <AuthButtons />
       </div>
 
-      <CreatePostModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <CreatePostModal open={isCreatePostOpen} onOpenChange={setIsCreatePostOpen} />
+
+      <SigninDialog
+        open={modal === 'signin'}
+        onOpenChange={(o) => setModal(o ? 'signin' : null)}
+        onSwitchToSignup={() => setModal('signup')}
+      />
+      <SignupDialog
+        open={modal === 'signup'}
+        onOpenChange={(o) => setModal(o ? 'signup' : null)}
+        onSwitchToSignin={() => setModal('signin')}
+      />
     </aside>
   );
 }
