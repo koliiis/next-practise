@@ -20,20 +20,19 @@ export default function Sidebar() {
   const username = session?.user?.username;
 
   return (
-    <aside className="flex flex-col items-center gap-10 py-4 px-auto h-screen bg-black text-white rounded-br-4xl rounded-tr-4xl border-r border-neutral-800 sticky top-0">
-      <Link href={PAGES.HOME} className="text-4xl font-bold mt-6">🪼</Link>
+    <aside className="fixed bottom-0 left-0 w-full lg:w-25 lg:rounded-r-4xl flex lg:flex-col lg:top-0 lg:bottom-auto lg:h-screen items-center justify-between lg:justify-start lg:gap-4 px-4 py-2 lg:py-4 bg-neutral-950 text-white border-t lg:border-t-0 lg:border-r border-neutral-800 z-50">
+      <Link href={PAGES.HOME} className="hidden lg:flex text-4xl font-bold mt-6">🪼</Link>
 
-      <div className="flex flex-col flex-grow justify-center">
-      <nav className="flex flex-col gap-6">
+      <nav className="flex lg:flex-col flex-grow lg:justify-center justify-between lg:gap-6">
         <Link href={PAGES.HOME} className="group">
-          <div className={`py-3 px-6 rounded-xl flex items-center justify-center transition-all 
+          <div className={`py-3 px-3 sm:px-6 rounded-xl flex items-center justify-center transition-all 
             ${pathname === PAGES.HOME ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
             <Home className="w-6 h-6" />
           </div>
         </Link>
 
         <Link href={PAGES.NOTES} className="group">
-          <div className={`py-3 px-6 rounded-xl flex items-center justify-center transition-all 
+          <div className={`py-3 px-3 sm:px-6 rounded-xl flex items-center justify-center transition-all 
             ${pathname === PAGES.NOTES ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
             <Search className="w-6 h-6" />
           </div>
@@ -57,7 +56,7 @@ export default function Sidebar() {
 
         {username ? (
           <Link href={PAGES.PROFILE(username)} className="group">
-            <div className={`cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all 
+            <div className={`cursor-pointer py-3 px-3 sm:px-6 rounded-xl flex items-center justify-center transition-all 
               ${pathname === PAGES.PROFILE(username) ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
               <User className="w-6 h-6" />
             </div>
@@ -65,16 +64,19 @@ export default function Sidebar() {
         ) : (
           <button
             onClick={() => setModal('signin')}
-            className="cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all text-zinc-400 hover:text-white hover:bg-zinc-800"
+            className="cursor-pointer py-3 px-3 sm:px-6 rounded-xl flex items-center justify-center transition-all text-zinc-400 hover:text-white hover:bg-zinc-800"
             aria-label="Sign In"
           >
             <User className="w-6 h-6" />
           </button>
         )}
-        </nav>
-        </div>
 
-      <div className="mb-2 w-full flex justify-center">
+        <div className="flex lg:hidden lg:mb-2 justify-center">
+          <AuthButtons />
+        </div>
+      </nav>
+
+      <div className="hidden lg:flex lg:mb-2 lg:w-full justify-center">
         <AuthButtons />
       </div>
 

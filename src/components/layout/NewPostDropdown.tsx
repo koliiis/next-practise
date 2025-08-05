@@ -37,7 +37,7 @@ export function NewPostDropdown() {
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <button
-            className="fixed cursor-pointer bottom-6 right-10 z-50 w-20 h-16 rounded-2xl hover:scale-110 transition-transform-color duration-300 opacity-70 hover:opacity-100 bg-neutral-800 text-white flex items-center justify-center"
+            className="hidden lg:flex fixed cursor-pointer bottom-6 right-10 z-50 w-20 h-16 rounded-2xl hover:scale-110 transition-transform-color duration-300 opacity-70 hover:opacity-100 bg-neutral-800 text-white items-center justify-center"
             aria-label="Create new post"
           >
             <Plus className="w-8 h-8" />

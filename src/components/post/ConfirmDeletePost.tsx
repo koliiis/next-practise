@@ -18,7 +18,7 @@ interface ConfirmModalProps {
 export function ConfirmModal({ open, message, onConfirm, onCancel }: ConfirmModalProps) {
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onCancel()}>
-      <DialogContent className="bg-neutral-800 text-white border border-neutral-700 rounded-2xl p-6 max-w-sm w-full">
+      <DialogContent className="bg-neutral-800 text-white border border-neutral-700 rounded-2xl p-6 max-w-xs sm:max-w-sm w-full">
         <DialogHeader>
           <DialogTitle>Confirm Action</DialogTitle>
           <DialogDescription className="text-gray-400">

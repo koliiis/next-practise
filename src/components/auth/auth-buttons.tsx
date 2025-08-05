@@ -13,7 +13,7 @@ export default function AuthButtons() {
 
   if (session?.user) {
     return (
-      <div className='mx-8 cursor-pointer'>
+      <div className='m-0 lg:mx-8 cursor-pointer'>
         <UserNav user={session.user} />
       </div>
     );
@@ -21,11 +21,11 @@ export default function AuthButtons() {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-2 w-max mx-4">
+      <div className="flex flex-row lg:flex-col justify-center items-center gap-2 lg:w-max lg:mx-4">
         <Button size="sm" variant="secondary" onClick={() => setModal('signin')} className='cursor-pointer'>
           Sign In
         </Button>
-        <Button size="sm" onClick={() => setModal('signup')} className="text-white cursor-pointer hover:bg-neutral-800">
+        <Button size="sm" onClick={() => setModal('signup')} className="hidden lg:flex text-white cursor-pointer hover:bg-neutral-800">
           Sign Up
         </Button>
       </div>

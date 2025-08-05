@@ -1,6 +1,5 @@
 'use client';
 
-import { User } from '@prisma/client';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -12,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useSession, signOut } from 'next-auth/react';
+import { User } from '@/shared/types/user';
 
 interface Props {
   user: User;
@@ -27,14 +27,16 @@ export function UserNav({ user }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full cursor-pointer">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src="/img/avatars/01.png" alt="avatar image" />
-            <AvatarFallback className="text-neutral-700 text-xl hover:text-violet-700">
-              {session?.user?.username?.[0]?.toUpperCase() ?? 'U'}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
+        <div className="flex items-center h-full">
+          <Button variant="ghost" className="relative h-10 w-10 rounded-full cursor-pointer">
+            <Avatar className="h-10 w-10">
+              <AvatarImage src="/img/avatars/01.png" alt="avatar image" />
+              <AvatarFallback className="text-neutral-700 text-xl hover:text-violet-700">
+                {session?.user?.username?.[0]?.toUpperCase() ?? 'U'}
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        </div>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent

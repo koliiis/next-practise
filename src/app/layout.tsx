@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Sidebar />
               <EmojiRain />
               <div className="flex-1 flex flex-col relative">
-                <main className="flex-1 max-w-4xl w-full mx-auto mt-12 px-4">
+                <main className="flex-1 max-w-150 xl:max-w-4xl w-full mx-auto mt-12 mb-18 px-4">
                   {children}
                 </main>
                 <NewPostDropdown />

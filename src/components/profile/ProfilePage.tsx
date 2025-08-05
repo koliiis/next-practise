@@ -21,19 +21,19 @@ export default function ProfilePageClient({ user }: { user: User }) {
   const isOwnProfile = session?.user?.id === user.id.toString();
 
   return (
-    <section className=" mx-auto p-8 bg-neutral-900 rounded-2xl">
-      <div className="flex items-center gap-4 mb-6">
+    <section className="mx-auto p-8 bg-neutral-900 rounded-2xl">
+      <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
         <div className="w-25 h-25 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-5xl">
           {user.username[0].toUpperCase()}
         </div>
 
-        <div className="ml-4">
+        <div className="sm:ml-4 sm:mt-0 mt-6">
           <h1 className="text-4xl font-bold text-white">{user.username}</h1>
           <p className="text-gray-500">{user.email}</p>
         </div>
 
         {isOwnProfile && (
-          <div className="ml-auto">
+          <div className="sm:ml-auto sm:m-0 mx-auto my-4">
             <button
               onClick={handleSignOut}
               className="cursor-pointer px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition-colors"
@@ -44,7 +44,7 @@ export default function ProfilePageClient({ user }: { user: User }) {
         )}
       </div>
 
-      <h2 className="text-xl font-semibold mb-4 text-white mt-16">
+      <h2 className="text-xl font-semibold mb-4 text-white sm:mt-12">
         Posts by {isOwnProfile ? 'you' : user.username}:
       </h2>
 

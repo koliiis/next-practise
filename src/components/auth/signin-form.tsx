@@ -165,8 +165,8 @@ export function SignInForm({ callbackUrl, onOpenChange, onSwitchToSignup }: Prop
         <span>New here?</span>
         <Button
           onClick={() => {
-            onOpenChange(false); // Закриваємо SignIn
-            setTimeout(() => onSwitchToSignup(), 100); // Відкриваємо SignUp після паузи
+            onOpenChange(false);
+            setTimeout(() => onSwitchToSignup(), 100);
           }}
           variant="ghost"
           className="text-violet-400 hover:text-white hover:bg-transparent p-0 h-auto underline cursor-pointer">

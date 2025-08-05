@@ -50,7 +50,7 @@ export function PostForm({ onPostCreated }: { onPostCreated?: () => void }) {
             <button
               type="submit"
               disabled={pending || !value.trim()}
-              className={`px-4 py-2 rounded font-medium transition ${
+              className={`ml-2 px-4 py-2 rounded font-medium transition ${
                 value.trim()
                   ? "bg-purple-500 hover:bg-purple-600 text-white"
                   : "bg-gray-300 text-gray-400 cursor-not-allowed"
