@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import Sidebar from "@/components/layout/Sidebar";
+import { NewPostDropdown } from "@/components/layout/NewPostDropdown";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,10 +22,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             <div className="flex min-h-screen relative">
               <Sidebar />
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col relative">
                 <main className="flex-1 max-w-3xl w-full mx-auto mt-12 px-4">
                   {children}
                 </main>
+                <NewPostDropdown />
                 <Toaster />
               </div>
             </div>

@@ -18,7 +18,6 @@ export default function Sidebar() {
   const [modal, setModal] = useState<'signin' | 'signup' | null>(null);
 
   const username = session?.user?.username;
-  const profileHref = username ? PAGES.PROFILE(username) : null;
 
   return (
     <aside className="flex flex-col items-center gap-10 py-4 px-auto h-screen bg-black text-white rounded-br-4xl rounded-tr-4xl border-r border-neutral-800 sticky top-0">
@@ -39,17 +38,26 @@ export default function Sidebar() {
           </div>
         </Link>
 
-        <button
-          onClick={() => setIsCreatePostOpen(true)}
-          className="cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all bg-neutral-900 text-zinc-400 hover:text-white hover:bg-zinc-800"
-        >
-          <Plus className="w-6 h-6" />
-        </button>
+        {username ? (
+          <button
+            onClick={() => setIsCreatePostOpen(true)}
+            className="cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all bg-neutral-900 text-zinc-400 hover:text-white hover:bg-zinc-800"
+          >
+            <Plus className="w-6 h-6" />
+          </button>
+        ) : (
+          <button
+            onClick={() => setModal('signin')}
+            className="cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all bg-neutral-900 text-zinc-400 hover:text-white hover:bg-zinc-800"
+          >
+            <Plus className="w-6 h-6" />
+          </button>
+        )}
 
-        {profileHref ? (
-          <Link href={profileHref} className="group">
+        {username ? (
+          <Link href={PAGES.PROFILE(username)} className="group">
             <div className={`cursor-pointer py-3 px-6 rounded-xl flex items-center justify-center transition-all 
-              ${pathname === profileHref ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
+              ${pathname === PAGES.PROFILE(username) ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
               <User className="w-6 h-6" />
             </div>
           </Link>

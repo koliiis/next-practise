@@ -84,7 +84,7 @@ export function SignInForm({ callbackUrl, onOpenChange, onSwitchToSignup }: Prop
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className='grid gap-2 mt-6'>
-          <div className='grid gap-1'>
+          <div className='grid gap-4'>
             <FormField
               control={form.control}
               name='email'
