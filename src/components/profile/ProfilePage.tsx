@@ -16,7 +16,6 @@ export default function ProfilePageClient({ user }: { user: User }) {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    window.location.reload();
   };
 
   const isOwnProfile = session?.user?.id === user.id.toString();

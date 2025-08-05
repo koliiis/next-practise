@@ -20,6 +20,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 import { User, Mail, Lock, Loader2 } from 'lucide-react';
+import { SignupDialog } from './SignupDialog';
 
 const Icons = {
   user: User,
@@ -40,12 +41,16 @@ type InputType = z.infer<typeof formSchema>;
 
 interface Props {
   callbackUrl?: string;
+  onOpenChange: (open: boolean) => void;
+  onSwitchToSignup: () => void;
 }
 
-export function SignInForm({ callbackUrl }: Props) {
+export function SignInForm({ callbackUrl, onOpenChange, onSwitchToSignup }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+
+  const [modal, setModal] = useState<'signin' | 'signup' | null>(null);
 
   const form = useForm<InputType>({
     resolver: zodResolver(formSchema),
@@ -68,7 +73,7 @@ export function SignInForm({ callbackUrl }: Props) {
       toast('Welcome back! Redirecting you to your dashboard!');
 
       router.push(callbackUrl ?? '/');
-    } catch (error) {
+    } catch {
       toast('Something went wrong');
     } finally {
       setIsLoading(false);
@@ -78,7 +83,7 @@ export function SignInForm({ callbackUrl }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className='grid gap-2'>
+        <div className='grid gap-2 mt-6'>
           <div className='grid gap-1'>
             <FormField
               control={form.control}
@@ -145,7 +150,7 @@ export function SignInForm({ callbackUrl }: Props) {
 
           <Button
             type='submit'
-            className='text-white mt-4'
+            className='text-white mt-4 cursor-pointer hover:text-violet-400 hover:bg-neutral-950'
             disabled={isLoading}
           >
             {isLoading && (
@@ -155,6 +160,25 @@ export function SignInForm({ callbackUrl }: Props) {
           </Button>
         </div>
       </form>
+
+      <div className="mt-6 flex items-center gap-2 text-sm text-neutral-400">
+        <span>New here?</span>
+        <Button
+          onClick={() => {
+            onOpenChange(false); // Закриваємо SignIn
+            setTimeout(() => onSwitchToSignup(), 100); // Відкриваємо SignUp після паузи
+          }}
+          variant="ghost"
+          className="text-violet-400 hover:text-white hover:bg-transparent p-0 h-auto underline cursor-pointer">
+          Join us →
+        </Button>
+      </div>
+
+      <SignupDialog
+        open={modal === 'signup'}
+        onOpenChange={(o) => setModal(o ? 'signup' : null)}
+        onSwitchToSignin={() => setModal('signin')}
+      />
     </Form>
   );
 }

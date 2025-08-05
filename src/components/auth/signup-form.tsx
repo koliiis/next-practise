@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { User, Mail, Lock, Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { SigninDialog } from './SigninDialog';
 
 const Icons = {
   user: User,
@@ -63,11 +64,15 @@ type InputType = z.infer<typeof formSchema>;
 
 interface Props {
   callbackUrl?: string;
+  onOpenChange: (open: boolean) => void;
+  onSwitchToSignin: () => void;
 }
 
-export function SignUpForm({ callbackUrl }: Props) {
+export function SignUpForm({ callbackUrl, onOpenChange, onSwitchToSignin }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  const [modal, setModal] = useState<'signin' | 'signup' | null>(null);
 
   const form = useForm<InputType>({
     resolver: zodResolver(formSchema),
@@ -111,7 +116,7 @@ export function SignUpForm({ callbackUrl }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-6">
         <FormField
           control={form.control}
           name="username"
@@ -210,11 +215,32 @@ export function SignUpForm({ callbackUrl }: Props) {
           )}
         />
 
-        <Button className="w-full" disabled={isLoading}>
+        <Button
+          className="w-full text-white mt-4 cursor-pointer hover:text-violet-400 hover:bg-neutral-950"
+          disabled={isLoading}
+        >
           {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           Sign Up
         </Button>
       </form>
+
+      <div className="mt-6 flex items-center gap-2 text-sm text-neutral-400">
+        <span>Already have an account?</span>
+        <Button
+          onClick={() => {
+            onOpenChange(false);
+            setTimeout(() => onSwitchToSignin(), 100);
+          }}
+          variant="ghost"
+          className="text-violet-400 hover:text-white hover:bg-transparent p-0 h-auto underline cursor-pointer">
+          Log in →
+        </Button>
+      </div>
+
+      <SigninDialog
+        open={modal === 'signin'}
+        onOpenChange={(o) => setModal(o ? 'signin' : null)}
+        onSwitchToSignup={() => setModal('signup')} />
     </Form>
   );
 }

@@ -22,13 +22,12 @@ export function UserNav({ user }: Props) {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    window.location.reload();
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full cursor-pointer">
           <Avatar className="h-10 w-10">
             <AvatarImage src="/img/avatars/01.png" alt="avatar image" />
             <AvatarFallback className="text-neutral-700 text-xl hover:text-violet-700">
