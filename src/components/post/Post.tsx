@@ -46,7 +46,7 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
   }, [menuOpen]);
 
   return (
-    <div className="mt-2 group relative bg-neutral-800 text-white rounded-xl p-4 max-w-2xl mx-auto border border-neutral-700 hover:bg-neutral-700 transition">
+    <div className="mt-4 group relative bg-neutral-800 text-white rounded-xl p-4 max-w-2xl mx-auto border border-neutral-700 hover:bg-neutral-700 transition">
       <div className="flex items-start gap-3">
         <Link href={PAGES.PROFILE(post.User.username)} className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white">
           {post.User.username[0]?.toUpperCase()}

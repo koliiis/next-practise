@@ -21,8 +21,9 @@ export default function Sidebar() {
 
   return (
     <aside className="flex flex-col items-center gap-10 py-4 px-auto h-screen bg-black text-white rounded-br-4xl rounded-tr-4xl border-r border-neutral-800 sticky top-0">
-      <Link href={PAGES.HOME} className="text-3xl font-bold mt-2 mb-4">🪲</Link>
+      <Link href={PAGES.HOME} className="text-4xl font-bold mt-6">🪼</Link>
 
+      <div className="flex flex-col flex-grow justify-center">
       <nav className="flex flex-col gap-6">
         <Link href={PAGES.HOME} className="group">
           <div className={`py-3 px-6 rounded-xl flex items-center justify-center transition-all 
@@ -70,9 +71,10 @@ export default function Sidebar() {
             <User className="w-6 h-6" />
           </button>
         )}
-      </nav>
+        </nav>
+        </div>
 
-      <div className="mt-auto w-full flex justify-center">
+      <div className="mb-2 w-full flex justify-center">
         <AuthButtons />
       </div>
 

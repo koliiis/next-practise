@@ -15,10 +15,10 @@ export default function Posts() {
   }, [loadPosts, trigger]);
 
   return (
-    <div className="">
-      <h1 className="text-2xl font-bold mb-4">All Posts</h1>
-      <div className="w-200">
-        {allPosts.length === 0 && <div>No posts</div>}
+    <div className="bg-neutral-900 p-4 rounded-2xl">
+      <h1 className="text-2xl font-bold m-6 text-white">All Posts</h1>
+      <div className="max-w-200">
+        {allPosts.length === 0 && <div className="text-neutral-500">No posts</div>}
         {allPosts.map((post) => (
           <Post key={post.id} post={post} currentUser={currentUserId} onPostDeleted={loadPosts} />
         ))}
