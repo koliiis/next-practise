@@ -8,7 +8,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { PostSkeleton } from '../post/PostSkeleton';
 
 export default function ProfilePageClient({ user }: { user: User }) {
-  const { posts, loadPosts, removePost, trigger } = useUserPosts();
+  const { posts, loadPosts, trigger } = useUserPosts();
   const { data: session } = useSession();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -66,7 +66,8 @@ export default function ProfilePageClient({ user }: { user: User }) {
               key={post.id}
               post={post}
               currentUser={user.id.toString()}
-              onPostDeleted={() => removePost(post.id)}
+              onPostDeleted={() => loadPosts(user.username)}
+              onPostUpdated={() => loadPosts(user.username)}
             />
           ))}
         </ul>

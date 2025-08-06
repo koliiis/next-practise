@@ -5,7 +5,6 @@ interface UserPostsState {
   posts: PostType[];
   setPosts: (posts: PostType[]) => void;
   loadPosts: (username: string) => Promise<void>;
-  removePost: (postId: number) => void;
   trigger: number;
   setTrigger: () => void;
 }
@@ -25,9 +24,5 @@ export const useUserPosts = create<UserPostsState>((set) => ({
       console.error(error);
     }
   },
-  removePost: (postId) =>
-    set((state) => ({
-      posts: state.posts.filter((post) => post.id !== postId),
-    })),
   setTrigger: () => set(state => ({ trigger: state.trigger + 1 })),
 }));

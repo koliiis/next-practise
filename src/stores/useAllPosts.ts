@@ -1,4 +1,3 @@
-// src/store/usePostStore.ts
 import { create } from 'zustand';
 import { PostType } from '@/shared/types/post';
 

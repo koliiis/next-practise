@@ -64,6 +64,7 @@ export default function Home() {
                 post={post}
                 currentUser={currentUserId}
                 onPostDeleted={loadPosts}
+                onPostUpdated={loadPosts}
               />
             ))}
           </div>

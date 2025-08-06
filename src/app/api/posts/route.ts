@@ -1,18 +1,38 @@
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions);
+    const currentUserId = session?.user?.id;
+
     const posts = await prisma.post.findMany({
       orderBy: { createdAt: "desc" },
-      include: { User: true },
+      include: {
+        User: true,
+        likes: {
+          select: { userId: true },
+        },
+      },
     });
-    return NextResponse.json(posts);
+
+    const formattedPosts = posts.map((post) => ({
+      ...post,
+      likesCount: post.likes.length,
+      likedByCurrentUser: currentUserId
+        ? post.likes.some((like) => like.userId === +currentUserId)
+        : false,
+    }));
+
+    return NextResponse.json(formattedPosts);
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "something baadd happened" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
 
 export async function POST(request: Request) {
   try {

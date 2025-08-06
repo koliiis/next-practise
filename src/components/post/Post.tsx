@@ -1,24 +1,30 @@
 import { useState, useRef, useEffect } from "react";
 import { PostType } from "@/shared/types/post";
 import { DeletePost } from "@/app/server-actions/delete-post";
-import { ConfirmModal } from "./ConfirmDeletePost"; // шадчн-модалка з Dialog
+import { ConfirmModal } from "./ConfirmDeletePost";
 import { formatDistanceToNow } from "date-fns";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 import { PAGES } from "@/config/pages.config";
 import { useSession } from "next-auth/react";
+import { toggleLike } from "@/app/server-actions/toggle-like";
+import { Heart, HeartCrack } from "lucide-react";
 
 interface Props {
   post: PostType;
   currentUser: string;
   onPostDeleted: () => void;
+  onPostUpdated: () => void;
 }
 
-export function Post({ post, currentUser, onPostDeleted }: Props) {
+export function Post({ post, currentUser, onPostDeleted, onPostUpdated }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
+
+  const [liked, setLiked] = useState(post.likedByCurrentUser);
+  const [likesCount, setLikesCount] = useState(post.likesCount ?? 0);
 
   async function handleDelete() {
     try {
@@ -28,6 +34,21 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
       alert("Failed to delete post");
     } finally {
       setConfirmOpen(false);
+    }
+  }
+
+  async function handleLike() {
+    const newLiked = !liked;
+    setLiked(newLiked);
+    setLikesCount((prev) => prev + (newLiked ? 1 : -1));
+
+    try {
+      await toggleLike(post.id);
+      onPostUpdated();
+    } catch {
+      setLiked(!newLiked);
+      setLikesCount((prev) => prev + (newLiked ? -1 : 1));
+      alert("Failed to like post");
     }
   }
 
@@ -69,6 +90,16 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
           <p className="mt-1 text-neutral-400 whitespace-pre-line text-sm break-all">
             {post.text}
           </p>
+
+          <div className="flex items-center gap-2 mt-4">
+            <button
+              onClick={handleLike}
+              className="hover:scale-110 transition cursor-pointer"
+            >
+              {liked ? <Heart color="#a600ff" /> : <HeartCrack color="gray" />}
+            </button>
+            <p className="text-neutral-500">{likesCount}</p>
+          </div>
         </div>
 
         {session && +currentUser === post.userId && (

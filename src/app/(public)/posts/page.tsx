@@ -78,6 +78,7 @@ export default function Posts() {
               post={post}
               currentUser={currentUserId}
               onPostDeleted={loadPosts}
+              onPostUpdated={loadPosts}
             />
           ))}
 
@@ -92,6 +93,7 @@ export default function Posts() {
               post={post}
               currentUser={currentUserId}
               onPostDeleted={loadPosts}
+              onPostUpdated={loadPosts}
             />
           ))}
       </div>

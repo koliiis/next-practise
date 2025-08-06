@@ -1,4 +1,6 @@
 import { prisma } from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function GET(
   request: Request,
@@ -7,6 +9,9 @@ export async function GET(
   const { username } = await context.params;
 
   try {
+    const session = await getServerSession(authOptions);
+    const sessionUserId = session?.user?.id;
+
     const userWithPosts = await prisma.user.findUnique({
       where: { username },
       include: {
@@ -14,6 +19,9 @@ export async function GET(
           orderBy: { createdAt: 'desc' },
           include: {
             User: true,
+            likes: {
+              select: { userId: true },
+            },
           },
         },
       },
@@ -23,7 +31,13 @@ export async function GET(
       return new Response('User not found', { status: 404 });
     }
 
-    return new Response(JSON.stringify(userWithPosts.Post), {
+    const enrichedPosts = userWithPosts.Post.map((post) => ({
+      ...post,
+      likesCount: post.likes.length,
+      likedByCurrentUser: post.likes.some(like => like.userId === +sessionUserId),
+    }));
+
+    return new Response(JSON.stringify(enrichedPosts), {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
