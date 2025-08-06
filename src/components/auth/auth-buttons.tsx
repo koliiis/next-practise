@@ -21,7 +21,7 @@ export default function AuthButtons() {
 
   return (
     <>
-      <div className="flex flex-row lg:flex-col justify-center items-center gap-2 lg:w-max w-6 sm:w-12 sm:mx-2">
+      <div className="flex flex-row lg:flex-col justify-center items-center gap-2 lg:w-max w-6 sm:w-12 mx-2">
         <Button size="sm" variant="secondary" onClick={() => setModal('signin')} className='cursor-pointer px-1 py-6 text-xs sm:text-sm lg:py-0 sm:px-[14px]'>
           Sign In
         </Button>
