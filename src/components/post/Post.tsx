@@ -55,7 +55,7 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <Link href={PAGES.PROFILE(post.User.username)} className="font-semibold">{post.User.username}</Link>
-            <span className="text-sm text-neutral-500">
+            <span className="text-xs sm:text-sm text-neutral-500">
               {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
             </span>
           </div>

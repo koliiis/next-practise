@@ -31,9 +31,9 @@ export default function Sidebar() {
           </div>
         </Link>
 
-        <Link href={PAGES.NOTES} className="group">
+        <Link href={PAGES.POSTS} className="group">
           <div className={`py-3 px-3 sm:px-6 rounded-xl flex items-center justify-center transition-all 
-            ${pathname === PAGES.NOTES ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
+            ${pathname === PAGES.POSTS ? 'bg-white text-black' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}>
             <Search className="w-6 h-6" />
           </div>
         </Link>

@@ -1,17 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserPosts } from '@/stores/useUserPosts';
 import { Post } from '@/components/post/Post';
 import { User } from '@/shared/types/user';
 import { signOut, useSession } from 'next-auth/react';
+import { PostSkeleton } from '../post/PostSkeleton';
 
 export default function ProfilePageClient({ user }: { user: User }) {
   const { posts, loadPosts, removePost, trigger } = useUserPosts();
   const { data: session } = useSession();
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    loadPosts(user.username);
+    setIsLoading(true);
+    loadPosts(user.username).finally(() => setIsLoading(false));
   }, [user.username, loadPosts, trigger]);
 
   const handleSignOut = async () => {
@@ -48,7 +52,12 @@ export default function ProfilePageClient({ user }: { user: User }) {
         Posts by {isOwnProfile ? 'you' : user.username}:
       </h2>
 
-      {posts.length === 0 ? (
+      {isLoading ? <>
+        <PostSkeleton />
+        <PostSkeleton />
+        <PostSkeleton />
+        <PostSkeleton />
+      </> : posts.length === 0 ? (
         <p className="text-gray-500 italic">No posts yet.</p>
       ) : (
         <ul className="space-y-4">

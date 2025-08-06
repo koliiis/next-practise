@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 import { Post } from '@/components/post/Post';
 import { useAllPosts } from '@/stores/useAllPosts';
 import Link from 'next/link';
 import { PAGES } from '@/config/pages.config';
+import { PostSkeleton } from '@/components/post/PostSkeleton';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -14,8 +15,11 @@ export default function Home() {
 
   const { allPosts, loadPosts, trigger } = useAllPosts();
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    loadPosts();
+    setIsLoading(true);
+    loadPosts().finally(() => setIsLoading(false));
   }, [loadPosts, trigger]);
 
   const latestPosts = allPosts.slice(0, 3);
@@ -37,17 +41,23 @@ export default function Home() {
           </h2>
 
           <Link
-            href={PAGES.NOTES}
+            href={PAGES.POSTS}
             className="text-zinc-400 hover:text-white hover:bg-zinc-800 px-4 py-2 rounded"
           >
             All posts
           </Link>
         </div>
 
-        {latestPosts.length === 0 ? (
+        {isLoading ? (
+          <>
+            <PostSkeleton />
+            <PostSkeleton />
+            <PostSkeleton />
+          </>
+        ) : latestPosts.length === 0 ? (
           <p className="text-gray-400">No posts yet.</p>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-6 pb-2">
             {latestPosts.map((post) => (
               <Post
                 key={post.id}
