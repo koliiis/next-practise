@@ -21,7 +21,7 @@ export default function Sidebar() {
 
   return (
     <aside className="fixed bottom-0 left-0 w-full lg:w-25 lg:rounded-r-4xl flex lg:flex-col lg:top-0 lg:bottom-auto lg:h-screen items-center justify-between lg:justify-start lg:gap-4 px-4 py-2 lg:py-4 bg-neutral-950 text-white border-t lg:border-t-0 lg:border-r border-neutral-800 z-50">
-      <Link href={PAGES.HOME} className="hidden lg:flex text-4xl font-bold mt-6">🪼</Link>
+      <Link href={PAGES.HOME} className="hidden lg:flex text-4xl font-bold mt-4">🪼</Link>
 
       <nav className="flex lg:flex-col flex-grow lg:justify-center justify-between lg:gap-6">
         <Link href={PAGES.HOME} className="group">

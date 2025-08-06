@@ -6,6 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 import { PAGES } from "@/config/pages.config";
+import { useSession } from "next-auth/react";
 
 interface Props {
   post: PostType;
@@ -17,6 +18,7 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
 
   async function handleDelete() {
     try {
@@ -69,7 +71,7 @@ export function Post({ post, currentUser, onPostDeleted }: Props) {
           </p>
         </div>
 
-        {+currentUser === post.userId && (
+        {session && +currentUser === post.userId && (
           <div className="relative transition-opacity duration-500" ref={menuRef}>
             <button
               onClick={() => setMenuOpen(!menuOpen)}

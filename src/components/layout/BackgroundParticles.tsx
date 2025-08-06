@@ -74,7 +74,7 @@ export const EmojiRain = () => {
       ctx.moveTo(0, h / 2);
       for (let x = 0; x <= w; x += 10) {
         const y =
-          h / 2 +
+          h / 1.5 +
           wave.amplitude *
             Math.sin((2 * Math.PI * (x / wave.wavelength)) + wave.phase);
         ctx.lineTo(x, y);
