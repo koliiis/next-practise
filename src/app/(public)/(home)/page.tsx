@@ -24,6 +24,7 @@ export default function Home() {
 
   const topLikedPosts = [...allPosts]
     .sort((a, b) => b.likesCount - a.likesCount)
+    .sort((a, b) => (b.commentsCount || 0) - (a.commentsCount || 0))
     .slice(0, 3);
 
   return (
