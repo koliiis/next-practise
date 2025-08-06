@@ -22,7 +22,9 @@ export default function Home() {
     loadPosts().finally(() => setIsLoading(false));
   }, [loadPosts, trigger]);
 
-  const latestPosts = allPosts.slice(0, 3);
+  const topLikedPosts = [...allPosts]
+    .sort((a, b) => b.likesCount - a.likesCount)
+    .slice(0, 3);
 
   return (
     <main className="flex-1 max-w-3xl w-full mx-auto mt-12 px-4">
@@ -54,11 +56,11 @@ export default function Home() {
             <PostSkeleton />
             <PostSkeleton />
           </>
-        ) : latestPosts.length === 0 ? (
+        ) : topLikedPosts.length === 0 ? (
           <p className="text-gray-400">No posts yet.</p>
         ) : (
           <div className="space-y-6 pb-2">
-            {latestPosts.map((post) => (
+            {topLikedPosts.map((post) => (
               <Post
                 key={post.id}
                 post={post}
