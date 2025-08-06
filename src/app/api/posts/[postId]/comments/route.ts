@@ -3,11 +3,12 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   req: NextRequest,
-  context: { params: { postId: string } }
+  context: unknown
 ) {
-  try {
-    const postId = Number(context.params.postId);
+  const { params } = context as { params: { postId: string } };
+  const postId = Number(params.postId);
 
+  try {
     const comments = await prisma.comment.findMany({
       where: { postId },
       include: { User: true },
@@ -23,10 +24,12 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  context: { params: { postId: string } }
+  context: unknown
 ) {
+  const { params } = context as { params: { postId: string } };
+  const postId = Number(params.postId);
+
   try {
-    const postId = Number(context.params.postId);
     const body = await req.json();
     const { text, userId } = body;
 
