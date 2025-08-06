@@ -1,7 +1,10 @@
+import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { postId: string } }) {
+type Params = { params: { postId: string } };
+
+export async function GET(req: NextRequest, { params }: Params) {
   try {
     const comments = await prisma.comment.findMany({
       where: { postId: Number(params.postId) },
@@ -15,7 +18,7 @@ export async function GET(req: Request, { params }: { params: { postId: string }
   }
 }
 
-export async function POST(req: Request, { params }: { params: { postId: string } }) {
+export async function POST(req: NextRequest, { params }: Params) {
   try {
     const body = await req.json();
     const { text, userId } = body;
