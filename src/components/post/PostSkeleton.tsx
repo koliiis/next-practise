@@ -1,3 +1,5 @@
+import { Heart } from "lucide-react";
+
 export function PostSkeleton() {
   return (
     <div className="mt-4 relative bg-neutral-800 text-white rounded-xl p-4 max-w-2xl mx-auto border border-neutral-700 animate-pulse">
@@ -13,7 +15,12 @@ export function PostSkeleton() {
           <div className="h-5 w-1/2 bg-neutral-700 rounded mb-2" />
 
           <div className="space-y-1">
-            <div className="h-3 w-30 bg-neutral-700 rounded" />
+            <div className="h-6 w-30 bg-neutral-700 rounded" />
+          </div>
+
+          <div className="flex items-center gap-2 mt-4">
+            <Heart color="#404040" />
+            <div className="h-3 w-3 bg-neutral-700 rounded"/>
           </div>
         </div>
       </div>

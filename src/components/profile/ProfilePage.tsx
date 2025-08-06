@@ -40,7 +40,7 @@ export default function ProfilePageClient({ user }: { user: User }) {
           <div className="sm:ml-auto sm:m-0 mx-auto my-4">
             <button
               onClick={handleSignOut}
-              className="cursor-pointer px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition-colors"
+              className="cursor-pointer px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-red-800 transition-colors"
             >
               Sign Out
             </button>

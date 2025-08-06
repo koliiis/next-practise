@@ -17,7 +17,7 @@ interface Props {
   onPostUpdated: () => void;
 }
 
-export function Post({ post, currentUser, onPostDeleted, onPostUpdated }: Props) {
+export function Post({ post, onPostDeleted, onPostUpdated }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -102,11 +102,11 @@ export function Post({ post, currentUser, onPostDeleted, onPostUpdated }: Props)
           </div>
         </div>
 
-        {session && +currentUser === post.userId && (
+        {+session?.user?.id === post.userId && (
           <div className="relative transition-opacity duration-500" ref={menuRef}>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="text-gray-400 hover:text-gray-200"
+              className="text-gray-400 hover:text-gray-200 cursor-pointer"
               aria-label="Post options"
             >
               <HiOutlineDotsHorizontal size={20} />
@@ -119,7 +119,7 @@ export function Post({ post, currentUser, onPostDeleted, onPostUpdated }: Props)
                     setConfirmOpen(true);
                     setMenuOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-neutral-800 hover:text-black bg-neutral-100 hover:bg-neutral-300 cursor-pointer rounded"
+                  className="block w-full text-left px-4 py-2 text-neutral-800 hover:text-red-800 bg-neutral-300 hover:bg-white cursor-pointer rounded"
                 >
                   Delete
                 </button>

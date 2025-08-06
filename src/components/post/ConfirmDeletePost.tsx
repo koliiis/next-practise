@@ -29,7 +29,7 @@ export function ConfirmModal({ open, message, onConfirm, onCancel }: ConfirmModa
         <DialogFooter className="mt-4">
           <Button
             variant="outline"
-            className="px-4 py-2 rounded border border-neutral-600 hover:bg-neutral-600 text-black"
+            className="px-4 py-2 rounded border border-neutral-600 hover:bg-neutral-600 text-black cursor-pointer"
             onClick={onCancel}
           >
             Cancel
@@ -37,7 +37,7 @@ export function ConfirmModal({ open, message, onConfirm, onCancel }: ConfirmModa
           <Button
             variant="destructive"
             onClick={onConfirm}
-            className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-800"
+            className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-800 cursor-pointer"
           >
             Delete
           </Button>
