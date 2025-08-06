@@ -15,12 +15,16 @@ export async function GET() {
         likes: {
           select: { userId: true },
         },
+        _count: {
+          select: { comments: true },
+        },
       },
     });
 
     const formattedPosts = posts.map((post) => ({
       ...post,
       likesCount: post.likes.length,
+      commentsCount: post._count.comments,
       likedByCurrentUser: currentUserId
         ? post.likes.some((like) => like.userId === +currentUserId)
         : false,

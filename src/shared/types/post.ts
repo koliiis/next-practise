@@ -7,6 +7,7 @@ export interface PostType {
   createdAt: string;
   userId: string | number;
   User: User;
+  commentsCount?: number;
   likesCount: number;
   likedByCurrentUser: boolean;
 }

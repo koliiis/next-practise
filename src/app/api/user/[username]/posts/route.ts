@@ -22,6 +22,9 @@ export async function GET(
             likes: {
               select: { userId: true },
             },
+            _count: {
+              select: { comments: true },
+            },
           },
         },
       },
@@ -34,6 +37,7 @@ export async function GET(
     const enrichedPosts = userWithPosts.Post.map((post) => ({
       ...post,
       likesCount: post.likes.length,
+      commentsCount: post._count.comments,
       likedByCurrentUser: post.likes.some(like => like.userId === +sessionUserId),
     }));
 
