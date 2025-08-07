@@ -166,7 +166,7 @@ export default function PostDetailPage() {
     <div className="bg-neutral-900 p-8 rounded-2xl text-white">
       <div className='flex justify-between mb-8'>
         <button onClick={handleBack} className='cursor-pointer text-neutral-600 hover:text-white transition'><CircleArrowLeft size={30} /></button>
-        <h1 className="text-xl font-bold text-neutral-300">{post.title}</h1>
+        <h1 className="text-sm mt-1 sm:text-xl font-bold text-neutral-300">{post.title}</h1>
 
         {+session?.user?.id === post.userId ? (
           <div className="relative transition-opacity duration-500" ref={menuRef}>
@@ -196,7 +196,7 @@ export default function PostDetailPage() {
             )}
           </div>
         ) : (
-          <div className="relative invisible" ref={menuRef}>
+          <div className="relative invisible hidden sm:flex" ref={menuRef}>
             <button className="text-gray-400 hover:text-gray-200 cursor-pointer" aria-label="Post options">
               <HiOutlineDotsHorizontal size={25} />
             </button>
@@ -204,31 +204,34 @@ export default function PostDetailPage() {
         )}
       </div>
 
-      <div className="flex items-start gap-3 ml-2">
-        <Link href={PAGES.PROFILE(post.User.username)} className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white">
-          {post?.User.username[0]?.toUpperCase()}
-        </Link>
-
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <Link href={PAGES.PROFILE(post.User.username)} className="font-semibold">{post.User.username}</Link>
-            <span className="text-xs sm:text-sm text-neutral-500">
-              {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
-            </span>
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3 ml-2">
+        <div className='flex flex-col'>
+          <div className="flex gap-4">
+            <Link href={PAGES.PROFILE(post.User.username)} className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white">
+              {post?.User.username[0]?.toUpperCase()}
+            </Link>
+            <div className="flex items-center gap-2">
+              <Link href={PAGES.PROFILE(post.User.username)} className="font-semibold">{post.User.username}</Link>
+              <span className="text-xs sm:text-sm text-neutral-500">
+                {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+              </span>
+            </div>
           </div>
+          <div className="flex-1">
 
-          <p className="mt-4 mb-6 text-2xl break-all whitespace-pre-line"
-            style={{
-              overflow: "hidden",
-              display: "-webkit-box",
-              WebkitBoxOrient: "vertical",
-              textOverflow: "ellipsis",
-            }}>
-            {post.text}
-          </p>
+            <p className="mt-6 mb-6 text-2xl break-all whitespace-pre-line"
+              style={{
+                overflow: "hidden",
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                textOverflow: "ellipsis",
+              }}>
+              {post.text}
+            </p>
+          </div>
         </div>
 
-        <div className='flex items-center gap-4 ml-12 mr-4'>
+        <div className='flex items-center gap-4 mb-4 sm:mb-0 mr-4'>
           <button
             onClick={(e) => {
               handleLike();
