@@ -2,7 +2,7 @@ import { Heart, MessageCircle } from "lucide-react";
 
 export function FullPostSkeleton() {
   return (
-    <div className="bg-neutral-900 rounded-2xl text-white animate-pulse p-4 sm:p-8">
+    <div className="bg-neutral-900 rounded-2xl text-white animate-pulse">
       <div className="flex justify-between items-center mb-8">
         <div className="w-8 h-8 rounded-full bg-neutral-700" />
         <div className="h-6 w-32 sm:w-40 bg-neutral-700 rounded" />

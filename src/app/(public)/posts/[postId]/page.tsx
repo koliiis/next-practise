@@ -219,7 +219,7 @@ export default function PostDetailPage() {
           </div>
           <div className="flex-1">
 
-            <p className="mt-6 mb-6 text-2xl break-all whitespace-pre-line"
+            <p className="mt-6 mb-2 sm:mb-6 text-2xl break-all whitespace-pre-line"
               style={{
                 overflow: "hidden",
                 display: "-webkit-box",
