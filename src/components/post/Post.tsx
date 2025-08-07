@@ -101,7 +101,16 @@ export function Post({ post, onPostDeleted, onPostUpdated }: Props) {
               <h2 className="mt-2 font-bold text-lg">{post.title}</h2>
             )}
 
-            <p className="mt-1 text-neutral-400 whitespace-pre-line text-sm break-all">
+            <p
+              className="mt-1 text-neutral-400 whitespace-pre-line text-sm break-all"
+              style={{
+                overflow: "hidden",
+                display: "-webkit-box",
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: "vertical",
+                textOverflow: "ellipsis",
+              }}
+            >
               {post.text}
             </p>
           </div>
