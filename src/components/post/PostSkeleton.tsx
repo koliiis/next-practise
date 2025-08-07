@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+import { Heart, MessageCircle } from "lucide-react";
 
 export function PostSkeleton() {
   return (
@@ -20,6 +20,8 @@ export function PostSkeleton() {
 
           <div className="flex items-center gap-2 mt-4">
             <Heart color="#404040" />
+            <div className="h-3 w-3 bg-neutral-700 rounded" />
+            <MessageCircle color="#404040" />
             <div className="h-3 w-3 bg-neutral-700 rounded"/>
           </div>
         </div>

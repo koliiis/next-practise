@@ -3,5 +3,6 @@ export const PAGES = {
   SIGNUP: '/auth/signup',
   PROFILE: (username: string) => `/user/${username}`,
   HOME: '/',
-  POSTS: '/posts'
+  POSTS: '/posts',
+  POST: (postId: number) => `/posts/${postId}`,
 }

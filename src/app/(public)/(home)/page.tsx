@@ -23,8 +23,15 @@ export default function Home() {
   }, [loadPosts, trigger]);
 
   const topLikedPosts = [...allPosts]
-    .sort((a, b) => b.likesCount - a.likesCount)
-    .sort((a, b) => (b.commentsCount || 0) - (a.commentsCount || 0))
+    .sort((a, b) => {
+      if ((a.commentsCount || 0) > (b.likesCount || 0)) {
+        return -1;
+      }
+      if ((b.commentsCount || 0) > (a.likesCount || 0)) {
+        return 1;
+      }
+      return (b.likesCount || 0) - (a.likesCount || 0);
+    })
     .slice(0, 3);
 
   return (

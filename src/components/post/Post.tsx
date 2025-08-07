@@ -80,91 +80,106 @@ export function Post({ post, onPostDeleted, onPostUpdated }: Props) {
   }, [menuOpen]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <div className="cursor-pointer mt-4 group relative bg-neutral-800 text-white rounded-xl p-4 max-w-2xl mx-auto border border-neutral-700 hover:bg-neutral-700 transition">
-          <div className="flex items-start gap-3">
-            <Link href={PAGES.PROFILE(post.User.username)} className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white">
-              {post.User.username[0]?.toUpperCase()}
-            </Link>
 
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <Link href={PAGES.PROFILE(post.User.username)} className="font-semibold">{post.User.username}</Link>
-                <span className="text-xs sm:text-sm text-neutral-500">
-                  {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
-                </span>
-              </div>
+    <div className="mt-4 group relative bg-neutral-800 text-white rounded-xl p-4 max-w-2xl mx-auto border border-neutral-700 hover:bg-neutral-700 transition">
+      <Link
+        href={PAGES.POST(post.id)} className="cursor-pointer">
+        <div className="flex items-start gap-3">
+          <Link href={PAGES.PROFILE(post.User.username)} className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white">
+            {post.User.username[0]?.toUpperCase()}
+          </Link>
 
-              {post.title && (
-                <h2 className="mt-2 font-bold text-lg">{post.title}</h2>
-              )}
-
-              <p className="mt-1 text-neutral-400 whitespace-pre-line text-sm break-all">
-                {post.text}
-              </p>
-
-              <div className="flex items-center gap-4 mt-4">
-                <button
-                  onClick={(e) => { handleLike(); e.preventDefault(); }}
-                  className="flex items-center gap-2 text-neutral-500 hover:text-white transition cursor-pointer"
-                >
-                  {liked ? <Heart color="#a600ff" /> : <HeartCrack />}
-                  <p>{likesCount}</p>
-                </button>
-
-                <button
-                  className="flex items-center gap-2 text-neutral-500 hover:text-white transition cursor-pointer"
-                  onClick={(e) => { e.preventDefault(); setOpen(true); }}
-                >
-                  <MessageCircle />
-                  <span>{commentsCount}</span>
-                </button>
-              </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <Link href={PAGES.PROFILE(post.User.username)} className="font-semibold">{post.User.username}</Link>
+              <span className="text-xs sm:text-sm text-neutral-500">
+                {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+              </span>
             </div>
 
-            {+session?.user?.id === post.userId && (
-              <div className="relative transition-opacity duration-500" ref={menuRef}>
-                <button
-                  onClick={() => setMenuOpen(!menuOpen)}
-                  className="text-gray-400 hover:text-gray-200 cursor-pointer"
-                  aria-label="Post options"
-                >
-                  <HiOutlineDotsHorizontal size={20} />
-                </button>
-
-                {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-32 rounded shadow-md z-10 bg-neutral-900 border border-neutral-700">
-                    <button
-                      onClick={() => {
-                        setConfirmOpen(true);
-                        setMenuOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 text-neutral-800 hover:text-red-800 bg-neutral-300 hover:bg-white cursor-pointer rounded"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </div>
+            {post.title && (
+              <h2 className="mt-2 font-bold text-lg">{post.title}</h2>
             )}
+
+            <p className="mt-1 text-neutral-400 whitespace-pre-line text-sm break-all">
+              {post.text}
+            </p>
           </div>
 
-          <ConfirmModal
-            open={confirmOpen}
-            message="Are you sure you want to delete this post?"
-            onConfirm={handleDelete}
-            onCancel={() => setConfirmOpen(false)}
-          />
-        </div>
-      </DialogTrigger>
+          {+session?.user?.id === post.userId && (
+            <div className="relative transition-opacity duration-500" ref={menuRef}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMenuOpen(!menuOpen)
+                }}
+                className="text-gray-400 hover:text-gray-200 cursor-pointer"
+                aria-label="Post options"
+              >
+                <HiOutlineDotsHorizontal size={20} />
+              </button>
 
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-neutral-900 border border-neutral-700 rounded-xl p-6">
-        <VisuallyHidden>
-          <DialogTitle>{post.title}</DialogTitle>
-        </VisuallyHidden>
-        <PostDetailModal post={post} onCommentAdded={() => setCommentsCount((prev) => prev + 1)} />
-      </DialogContent>
-    </Dialog>
+              {menuOpen && (
+                <div className="absolute right-0 mt-2 w-32 rounded shadow-md z-10 bg-neutral-900 border border-neutral-700">
+                  <button
+                    onClick={() => {
+                      setConfirmOpen(true);
+                      setMenuOpen(false);
+                    }}
+                    className="block w-full text-left px-4 py-2 text-neutral-800 hover:text-red-800 bg-neutral-300 hover:bg-white cursor-pointer rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+        </div>
+      </Link >
+
+      <div className="flex items-center gap-4 mt-4 ml-12">
+        <button
+          onClick={(e) => {
+            handleLike();
+            e.preventDefault();
+          }}
+          className="flex items-center gap-2 text-neutral-500 hover:text-white transition cursor-pointer"
+        >
+          {liked ? <Heart color="#a600ff" /> : <HeartCrack />}
+          <p>{likesCount}</p>
+        </button>
+
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setOpen(true);
+              }}
+              className="flex items-center gap-2 text-neutral-500 hover:text-white transition cursor-pointer"
+            >
+              <MessageCircle />
+              <span>{commentsCount}</span>
+            </button>
+          </DialogTrigger>
+
+          <DialogContent className="w-4xl max-h-9/10 overflow-y-auto bg-neutral-900 border border-neutral-700 rounded-xl p-6">
+            <VisuallyHidden>
+              <DialogTitle>{post.title}</DialogTitle>
+            </VisuallyHidden>
+            <PostDetailModal post={post} onCommentAdded={() => setCommentsCount((prev) => prev + 1)} />
+          </DialogContent>
+        </Dialog>
+      </div>
+      <ConfirmModal
+        open={confirmOpen}
+        message="Are you sure you want to delete this post?"
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmOpen(false)}
+      />
+    </div>
+
+
   );
 }
