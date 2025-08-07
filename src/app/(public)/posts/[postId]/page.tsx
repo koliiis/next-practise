@@ -217,7 +217,13 @@ export default function PostDetailPage() {
             </span>
           </div>
 
-          <p className="mt-4 mb-6 text-3xl break-all">
+          <p className="mt-4 mb-6 text-2xl break-all whitespace-pre-line"
+            style={{
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              textOverflow: "ellipsis",
+            }}>
             {post.text}
           </p>
         </div>
